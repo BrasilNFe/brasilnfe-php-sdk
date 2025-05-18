@@ -3,6 +3,12 @@
     "description": "SDK para integração com Brasil NFe",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Brasil NFe LTDA",
+            "email": "contato@brasilnfe.com.br"
+        }
+    ],
     "version": "1.0.0",
     "autoload": {
         "psr-4": {
