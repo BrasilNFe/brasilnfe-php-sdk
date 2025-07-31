@@ -23,13 +23,13 @@ class NotaFiscal extends BrasilNFeRequest
 
     public function enviarNotaFiscal(NotaFiscalEnvio $notaFiscal, ?int $CRT = null): NotaFiscalRetorno
     {
-        $error = Validador::validaNotaFiscalEnvio($notaFiscal, $CRT);
+        // $error = Validador::validaNotaFiscalEnvio($notaFiscal, $CRT);
 
-        if (!empty($error)) {
-            $retorno = new NotaFiscalRetorno();
-            $retorno->error = $error;
-            return $retorno;
-        }
+        // if (!empty($error)) {
+        //     $retorno = new NotaFiscalRetorno();
+        //     $retorno->error = $error;
+        //     return $retorno;
+        // }
 
         return $this->request("EnviarNotaFiscal", $notaFiscal, NotaFiscalRetorno::class);
     }

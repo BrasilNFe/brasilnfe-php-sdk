@@ -10,7 +10,7 @@ class PreVisualizarNotaFiscalEnvio
     /**
      * Nota fiscal para pré-visualização
      */
-    public ?NotaFiscalEnvioV2 $notaFiscal = null;
+    public ?NotaFiscalLoteEnvio $notaFiscal = null;
 
     /**
      * XML em formato Base64

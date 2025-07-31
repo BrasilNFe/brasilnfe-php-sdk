@@ -4,42 +4,7 @@ namespace BrasilNFeSdk\Envio\NFe;
 
 use BrasilNFeSdk\Envio\Outros\Pessoa;
 
-class Cliente
-{
-    /**
-     * @var string
-     * @para 1 - Contribuinte ICMS (informar a IE do destinatário)
-     * @para 2 - Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS
-     * @para 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS
-     */
-    public $cpfCnpj;
-    public $nmCliente;
-    public $cep;
-    public $logradouro;
-    public $complemento;
-    public $numero;
-    public $bairro;
-    public $codMunicipio;
-    public $nmMunicipio;
-    public $uf;
-    public $codPais = 1058;
-    public $nmPais = "BRASIL";
-    public $telefone;
-    public $email;
-    
-    /**
-     * @var int
-     * @para 1 - Contribuinte ICMS (informar a IE do destinatário)
-     * @para 2 - Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS
-     * @para 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS
-     */
-    public $indicadoIE = 9;
-    
-    public $ie;
-    public $isuf;
-}
-
-class ClienteV2 extends Pessoa
+class Cliente extends Pessoa
 {
     public $cpfCnpj;
     public $nmCliente;
@@ -748,7 +713,7 @@ class NotaFiscalEnvio
     public Entrega $entrega;
 }
 
-class NotaFiscalEnvioV2
+class NotaFiscalLoteEnvio
 {
     public function __construct()
     {
@@ -875,7 +840,7 @@ class NFInfo
     public $observacaoFisco;
     public $identificadorInterno;
     public $enviarEmail;
-    public ClienteV2 $cliente;
+    public Cliente $cliente;
     
     /**
      * @var Produto[]

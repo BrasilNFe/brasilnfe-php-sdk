@@ -25,18 +25,20 @@ $nota->identificadorInterno = "218";
 
 $nota->cliente->cpfCnpj = "921.091.130-06";
 $nota->cliente->nmCliente = "Cliente Teste";
-$nota->cliente->cep = "30130-001";
-$nota->cliente->logradouro = "Teste Logradouro";
-$nota->cliente->complemento = "PARTE";
-$nota->cliente->numero = "123";
-$nota->cliente->bairro = "Teste Bairro";
-$nota->cliente->nmMunicipio = "Belo Horizonte";
-$nota->cliente->codMunicipio = 3106200;
-$nota->cliente->uf = "MG";
-$nota->cliente->codPais = 1058;
-$nota->cliente->indicadoIE = 9;
+$nota->cliente->indicadorIe = 9;
 $nota->cliente->ie = "";
-$nota->cliente->telefone = "";
+
+$nota->cliente->endereco->cep = "30130-001";
+$nota->cliente->endereco->logradouro = "Teste Logradouro";
+$nota->cliente->endereco->complemento = "PARTE";
+$nota->cliente->endereco->numero = "123";
+$nota->cliente->endereco->bairro = "Teste Bairro";
+$nota->cliente->endereco->municipio = "Belo Horizonte";
+$nota->cliente->endereco->codMunicipio = 3106200;
+$nota->cliente->endereco->uf = "MG";
+$nota->cliente->endereco->codPais = 1058;
+$nota->cliente->contato->telefone = "";
+$nota->cliente->contato->email = "";
 
 $produto = new Produto();
 $produto->codProdutoServico = "1";
@@ -51,6 +53,7 @@ $produto->valorFrete = 0.0;
 $produto->valorUnitario = 1.00;
 $produto->valorTotal = 1.00;
 $produto->cfop = 5102;
+$produto->codTributacao = "";
 
 $imposto = new Imposto();
 
