@@ -3,16 +3,21 @@
 namespace BrasilNFeSdk\Methods;
 
 use BrasilNFeSdk\BrasilNFeRequest;
+use BrasilNFeSdk\Envio\CTe\CTeEnvio;
 use BrasilNFeSdk\Envio\MDFe\ManifestoTransporteEnvio;
 use BrasilNFeSdk\Envio\MDFe\ManifestoTransporteRetorno;
+use BrasilNFeSdk\Envio\NFe\DCeEnvio;
 use BrasilNFeSdk\Envio\NFe\NotaFiscalComplementarEnvio;
 use BrasilNFeSdk\Envio\NFe\NotaFiscalEnvio;
+use BrasilNFeSdk\Envio\NFe\NotaFiscalLoteEnvio;
 use BrasilNFeSdk\Envio\NFe\NotaFiscalServicoEnvio;
 use BrasilNFeSdk\Envio\Outros\NFEnerComEnvio;
 use BrasilNFeSdk\Envio\Outros\NFEnerComRetorno;
+use BrasilNFeSdk\Retorno\CTeRetorno;
+use BrasilNFeSdk\Retorno\DCeRetorno;
+use BrasilNFeSdk\Retorno\NotaFiscalLoteRetorno;
 use BrasilNFeSdk\Retorno\NotaFiscalRetorno;
 use BrasilNFeSdk\Retorno\NotaFiscalServicoRetorno;
-use BrasilNFeSdk\Validador;
 
 class NotaFiscal extends BrasilNFeRequest
 {
@@ -23,70 +28,41 @@ class NotaFiscal extends BrasilNFeRequest
 
     public function enviarNotaFiscal(NotaFiscalEnvio $notaFiscal, ?int $CRT = null): NotaFiscalRetorno
     {
-        // $error = Validador::validaNotaFiscalEnvio($notaFiscal, $CRT);
-
-        // if (!empty($error)) {
-        //     $retorno = new NotaFiscalRetorno();
-        //     $retorno->error = $error;
-        //     return $retorno;
-        // }
-
         return $this->request("EnviarNotaFiscal", $notaFiscal, NotaFiscalRetorno::class);
+    }
+
+    public function enviarNotaFiscalLote(NotaFiscalLoteEnvio $notaFiscalLote, ?int $CRT = null): NotaFiscalLoteRetorno
+    {
+        return $this->request("EnviarNotaFiscalLote", $notaFiscalLote, NotaFiscalLoteRetorno::class);
+    }
+
+    public function enviarConhecimentoTransporte(CTeEnvio $cteEnvio): CTeRetorno
+    {
+        return $this->request("EnviarConhecimentoTransporte", $cteEnvio, CTeRetorno::class);
+    }
+
+    public function enviarDeclaracaoConteudo(DCeEnvio $dceEnvio): DCeRetorno
+    {
+        return $this->request("EnviarDeclaracaoConteudo", $dceEnvio, DCeRetorno::class);
     }
 
     public function enviarNotaFiscalServico(NotaFiscalServicoEnvio $notaFiscal): NotaFiscalServicoRetorno
     {
-        // $error = Validador::validaNFSeEnvio($notaFiscal);
-
-        // if (!empty($error)) {
-        //     $retorno = new NotaFiscalServicoRetorno();
-        //     $retorno->error = $error;
-        //     $retorno->statusLote = 3;
-        //     return $retorno;
-        // }
-
         return $this->request("EnviarNotaFiscalServico", $notaFiscal, NotaFiscalServicoRetorno::class);
     }
 
     public function enviarManifestoTransporte(ManifestoTransporteEnvio $manifestoTransporte): ManifestoTransporteRetorno
     {
-        // $error = Validador::validaManifestoTransporteEnvio($manifestoTransporte);
-
-        // if (!empty($error)) {
-        //     $retorno = new ManifestoTransporteRetorno();
-        //     $retorno->error = $error;
-        //     $retorno->status = 3;
-        //     return $retorno;
-        // }
-
         return $this->request("EnviarManifestoTransporte", $manifestoTransporte, ManifestoTransporteRetorno::class);
     }
 
     public function enviarNFEnerCom(NFEnerComEnvio $nFEnerComEnvio): NFEnerComRetorno
     {
-        // $error = Validador::validaNFEnerComEnvio($nFEnerComEnvio, false);
-
-        // if (!empty($error['erros'])) {
-        //     $retorno = new NFEnerComRetorno();
-        //     $retorno->erros = $error['erros'];
-        //     $retorno->avisos = $error['avisos'] ?? [];
-        //     $retorno->status = false;
-        //     return $retorno;
-        // }
-
         return $this->request("EnviarNFEnerCom", $nFEnerComEnvio, NFEnerComRetorno::class);
     }
 
     public function enviarNotaFiscalComplementar(NotaFiscalComplementarEnvio $notaFiscal): NotaFiscalRetorno
     {
-        // $error = Validador::validaNotaFiscalComplementarEnvio($notaFiscal);
-
-        // if (!empty($error['erros'])) {
-        //     $retorno = new NotaFiscalRetorno();
-        //     $retorno->error = $error;
-        //     return $retorno;
-        // }
-
         return $this->request("EnviarNotaFiscalComplementar", $notaFiscal, NotaFiscalRetorno::class);
     }
 }

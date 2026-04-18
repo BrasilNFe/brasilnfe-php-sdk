@@ -35,16 +35,6 @@ class Consultas extends BrasilNFeRequest
 
     public function preVisualizarNotaFiscal(PreVisualizarNotaFiscalEnvio $preVisualizarDanfeEnvio): PreVisualizarNotaFiscalRetorno
     {
-        // $error = Validador::validaPreVisualizacao($preVisualizarDanfeEnvio);
-
-        // if (!empty($error)) {
-        //     $retorno = new PreVisualizarNotaFiscalRetorno();
-        //     $retorno->error = $error;
-        //     $retorno->status = false;
-
-        //     return $retorno;
-        // }
-
         return $this->request("PreVisualizarNotaFiscal", $preVisualizarDanfeEnvio, PreVisualizarNotaFiscalRetorno::class);
     }
 

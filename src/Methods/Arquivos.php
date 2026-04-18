@@ -26,62 +26,25 @@ class Arquivos extends BrasilNFeRequest
 
     public function obterArquivoSintegra(SintegraEnvio $sintegraEnvio): SintegraRetorno
     {
-        // $error = Validador::validaSintegraEnvio($sintegraEnvio);
-
-        // if (!empty($error)) {
-        //     $retorno = new SintegraRetorno();
-        //     $retorno->error = $error;
-        //     $retorno->status = false;
-        //     return $retorno;
-        // }
-
         return $this->request('ObterArquivoSintegra', $sintegraEnvio, SintegraRetorno::class);
     }
 
     public function obterArquivoFci(FciEnvio $fciEnvio): FciRetorno
     {
-        // $error = Validador::validaFciEnvio($fciEnvio);
-
-        // if (!empty($error)) {
-        //     $retorno = new FciRetorno();
-        //     $retorno->error = $error;
-        //     $retorno->status = false;
-        //     return $retorno;
-        // }
-
         return $this->request('ObterArquivoFci', $fciEnvio, FciRetorno::class);
     }
 
-    public function obterArqEnerCom(ArqEnerComEnvio $arqEnerComEnvio):ArqEnerComRetorno
+    public function obterArqEnerCom(ArqEnerComEnvio $arqEnerComEnvio): ArqEnerComRetorno
     {
-        // $error = Validador::validaArqEnerComEnvio($arqEnerComEnvio);
-
-        // if (!empty($error['erros'])) {
-        //     $retorno = new ArqEnerComRetorno();
-        //     $retorno->erros = $error['erros'];
-        //     $retorno->avisos = $error['avisos'] ?? [];
-        //     $retorno->status = false;
-        //     return $retorno;
-        // }
-
         return $this->request('ObterArquivoNFEnerCom', $arqEnerComEnvio, ArqEnerComRetorno::class);
     }
 
-    public function obterArquivoSped(SpedEnvio $spedEnvio):SpedRetorno
+    public function obterArquivoSped(SpedEnvio $spedEnvio): SpedRetorno
     {
-        // $error = Validador::validaSpedEnvio($spedEnvio);
-
-        // if (!empty($error)) {
-        //     $retorno = new SpedRetorno();
-        //     $retorno->error = $error;
-        //     $retorno->status = 3;
-        //     return $retorno;
-        // }
-
         return $this->request('ObterArquivoSped', $spedEnvio, SpedRetorno::class);
     }
 
-    public function obterArquivoSpedUnificado(UnificarSpedEnvio $unificarSpedEnvio):SpedRetorno
+    public function obterArquivoSpedUnificado(UnificarSpedEnvio $unificarSpedEnvio): SpedRetorno
     {
         return $this->request('ObterArquivoSpedUnificado', $unificarSpedEnvio, SpedRetorno::class);
     }
@@ -94,20 +57,20 @@ class Arquivos extends BrasilNFeRequest
     /**
      * @return string Dados binários do arquivo (conteúdo decodificado do base64)
      */
-    public function pegarArquivo(PegarArquivoEnvio $pegarArquivoEnvio):string
+    public function pegarArquivo(PegarArquivoEnvio $pegarArquivoEnvio): string
     {
-        return $this->request('GetFile', $pegarArquivoEnvio, string::class, false, 'base64');
+        return $this->request('GetFile', $pegarArquivoEnvio, 'string', false, 'base64');
     }
 
     /**
      * @return string Dados binários do arquivo (conteúdo decodificado do base64)
      */
-    public function pegarArquivoEvento(PegarArquivoEventoEnvio $pegarArquivoEventoEnvio)
+    public function pegarArquivoEvento(PegarArquivoEventoEnvio $pegarArquivoEventoEnvio): string
     {
-        return $this->request('GetFileFromEvent', $pegarArquivoEventoEnvio, string::class, false, 'base64');
+        return $this->request('GetFileFromEvent', $pegarArquivoEventoEnvio, 'string', false, 'base64');
     }
 
-    public function obterArquivosPorRange(ObterArquivosRangeEnvio $pegarArquivosRangeEnvio):ObterArquivosRangeRetorno
+    public function obterArquivosPorRange(ObterArquivosRangeEnvio $pegarArquivosRangeEnvio): ObterArquivosRangeRetorno
     {
         return $this->request('ObterArquivosPorRange', $pegarArquivosRangeEnvio, ObterArquivosRangeRetorno::class);
     }

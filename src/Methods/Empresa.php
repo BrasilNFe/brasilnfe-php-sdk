@@ -27,27 +27,11 @@ class Empresa extends BrasilNFeRequest
 
     public function adicionarEmpresa(EmpresaEnvio $empresa): EmpresaRetorno
     {
-        // $error = Validador::validaEmpresaEnvio($empresa);
-
-        // if (!empty($error)) {
-        //     $retorno = new EmpresaRetorno();
-        //     $retorno->error = $error;
-        //     return $retorno;
-        // }
-
         return $this->request("AdicionarEmpresa", $empresa, EmpresaRetorno::class);
     }
 
     public function editarEmpresa(EmpresaEnvio $empresa): EmpresaRetorno
     {
-        // $error = Validador::validaEmpresaEnvio($empresa);
-
-        // if (!empty($error)) {
-        //     $retorno = new EmpresaRetorno();
-        //     $retorno->error = $error;
-        //     return $retorno;
-        // }
-
         return $this->request("EditarEmpresa", $empresa, EmpresaRetorno::class);
     }
 

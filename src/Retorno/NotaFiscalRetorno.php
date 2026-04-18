@@ -76,29 +76,5 @@ class DetalhesNF
     public float $valorCofins;
 }
 
-/**
- * Class NotaFiscalLoteListRetorno
- */
-class NotaFiscalLoteListRetorno
-{
-    /** @var RetornoInfo */
-    public RetornoInfo $returnNf;
-
-    /** @var string */
-    public string $base64Xml;
-
-    /** @var string */
-    public string $base64File;
-
-    /** @var string */
-    public string $identificadorInterno;
-}
-
-/**
- * Class NotaFiscalLoteRetorno
- */
-class NotaFiscalLoteRetorno extends Erros
-{
-    /** @var list<NotaFiscalLoteListRetorno> */
-    public array $notas;
-}
+// NotaFiscalLoteListRetorno e NotaFiscalLoteRetorno movidos para
+// NotaFiscalLoteRetorno.php (PSR-4).

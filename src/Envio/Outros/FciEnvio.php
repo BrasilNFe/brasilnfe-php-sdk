@@ -2,8 +2,6 @@
 
 namespace BrasilNFeSdk\Envio\Outros;
 
-use BrasilNFeSdk\Retorno\Erros;
-
 /**
  * Class FciEnvio
  */
@@ -72,18 +70,4 @@ class FciProduto
     public ?float $percentualImportado = null;
 }
 
-/**
- * Class FciRetorno
- */
-class FciRetorno extends Erros
-{
-    /**
-     * Status da operação
-     */
-    public bool $status = false;
-
-    /**
-     * Registros gerados
-     */
-    public ?string $registros = null;
-}
+// FciRetorno movido para FciRetorno.php (PSR-4).
