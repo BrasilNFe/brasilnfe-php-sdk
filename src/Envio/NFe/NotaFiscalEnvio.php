@@ -172,12 +172,14 @@ class Imposto
         $this->icms = new ICMS();
         $this->pis = new PIS();
         $this->cofins = new COFINS();
+        $this->ibscbs = new IBSCBS();
     }
 
     public ICMS $icms;
     public ?IPI $ipi = null;
     public PIS $pis;
     public COFINS $cofins;
+    public IBSCBS $ibscbs;
     public ?Importacao $importacao = null;
 }
 
@@ -315,6 +317,29 @@ class COFINS
      * @var float|null Base de Cálculo (Quando não informado, é o valor dos produtos)
      */
     public $baseCalculo;
+}
+
+class IBSCBS
+{
+    /**
+     * @var string Código da Situação Tributária do IBSCBS
+     */
+    public $codClassificacaoTributaria;
+
+    /**
+     * @var float|null Aliquota do IBS UF
+     */
+    public $aliquotaIBSUF;
+
+    /**
+     * @var float|null Aliquota do IBS MUNICIPIO
+     */
+    public $aliquotaIBSMun;
+
+    /**
+     * @var float|null Aliquota do CBS
+     */
+    public $aliquotaCBS;
 }
 
 class Importacao
