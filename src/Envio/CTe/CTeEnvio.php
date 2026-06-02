@@ -139,65 +139,21 @@ class Imposto
     public ?string $informacoesAdicionaisFisco = null;
     public ?Difal $difal = null;
     public ?TributoFederal $tributosFederal = null;
-}
-
-class Proprietario
-{
-    public ?string $cpfCnpj = null;
-    public ?string $rNTRC = null;
-    public ?string $tAF = null;
-    public ?string $nroRegEstadual = null;
-    public ?string $nome = null;
-    public ?string $ie = null;
-    public ?string $uf = null;
 
     /**
-     * Tipo do proprietário:
-     * 0 - TAC Agregado, 1 - TAC Independente, 2 - Outros
+     * Bloco IBS/CBS (Reforma Tributária). Usar quando aplicável.
      */
-    public int $tipoProprietario = 0;
+    public ?\BrasilNFeSdk\Envio\NFe\IBSCBS $iBSCBS = null;
 }
 
 class Veiculo
 {
-    public ?string $codigoInterno = null;
-    public ?string $renavam = null;
+    /** Placa do veículo. */
     public ?string $placa = null;
-    public ?int $tara = null;
-    public ?int $capacidadeKG = null;
-    public ?int $capacidadeM3 = null;
-
-    /**
-     * Tipo de propriedade:
-     * true - Terceiros, false - Proprio
-     */
-    public ?bool $tipoPropriedade = null;
-
-    /** Tipo: 0 - Tração, 1 - Reboque */
-    public ?int $tipoVeiculo = null;
-
-    /** Tipo de rodado: 0-Não aplicavel, 1-Truck, 2-Toco, 3-Cavalo Mecânico, 4-Van, 5-Utilitário, 6-Outros */
-    public ?int $tipoRodado = null;
-
-    /** Tipo de carroceria: 0-Não aplicavel, 1-Aberta, 2-Fechada, 3-Graneleira, 4-Porta Container, 5-Sider */
-    public ?int $tipoCarroceria = null;
-
-    public ?string $ufPlaca = null;
-    public ?Proprietario $proprietario = null;
-}
-
-class Motorista
-{
-    public ?string $nome = null;
-    public ?string $cpf = null;
-}
-
-class ValePedagio
-{
-    public ?string $numeroComprovante = null;
-    public ?string $cnpjFornecedor = null;
-    public ?string $cnpjPagador = null;
-    public float $valor = 0.0;
+    /** UF da placa. */
+    public ?string $uf = null;
+    /** Registro Nacional de Transporte de Carga (RNTC) do veículo. */
+    public ?string $rNTC = null;
 }
 
 class EmissorOCC

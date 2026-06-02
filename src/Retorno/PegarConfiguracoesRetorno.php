@@ -12,62 +12,62 @@ class PegarConfiguracoesRetorno extends Erros
     /** @var int */
     public int $codEstado;
     
-    /** @var string */
-    public string $nmEstado;
+    /** @var string|null */
+    public ?string $nmEstado = null;
 
-    /** @var string */
-    public string $tipoEmpresa;
+    /** @var string|null */
+    public ?string $tipoEmpresa = null;
 
-    /** @var string */
-    public string $nmEmpresa;
+    /** @var string|null */
+    public ?string $nmEmpresa = null;
 
-    /** @var string */
-    public string $nmFantazia;
+    /** @var string|null */
+    public ?string $nmFantazia = null;
 
-    /** @var string */
-    public string $codIdCsc;
+    /** @var string|null */
+    public ?string $codIdCsc = null;
 
-    /** @var string */
-    public string $csc;
+    /** @var string|null */
+    public ?string $csc = null;
 
-    /** @var string */
-    public string $cnpj;
+    /** @var string|null */
+    public ?string $cnpj = null;
 
-    /** @var string */
-    public string $cnae;
+    /** @var string|null */
+    public ?string $cnae = null;
 
-    /** @var string */
-    public string $ie;
+    /** @var string|null */
+    public ?string $ie = null;
 
-    /** @var string */
-    public string $iest;
+    /** @var string|null */
+    public ?string $iest = null;
 
-    /** @var string */
-    public string $im;
+    /** @var string|null */
+    public ?string $im = null;
 
-    /** @var string */
-    public string $cep;
+    /** @var string|null */
+    public ?string $cep = null;
 
     /** @var int */
     public int $codMunicipio;
 
-    /** @var string */
-    public string $numero;
+    /** @var string|null */
+    public ?string $numero = null;
 
-    /** @var string */
-    public string $nmBairro;
+    /** @var string|null */
+    public ?string $nmBairro = null;
 
-    /** @var string */
-    public string $complemento;
+    /** @var string|null */
+    public ?string $complemento = null;
 
-    /** @var string */
-    public string $logradouro;
+    /** @var string|null */
+    public ?string $logradouro = null;
 
-    /** @var string */
-    public string $nmMunicipio;
+    /** @var string|null */
+    public ?string $nmMunicipio = null;
 
-    /** @var string */
-    public string $site;
+    /** @var string|null */
+    public ?string $site = null;
     
     /** @var bool */
     public bool $apenasSat;
@@ -75,9 +75,9 @@ class PegarConfiguracoesRetorno extends Erros
     /** @var int */
     public int $modeloSat;
     
-    /** @var string */
-    public string $nuAtivacao;
+    /** @var string|null */
+    public ?string $nuAtivacao = null;
     
-    /** @var string */
-    public string $nuSat;
+    /** @var string|null */
+    public ?string $nuSat = null;
 }

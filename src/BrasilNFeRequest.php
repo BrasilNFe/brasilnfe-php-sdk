@@ -73,7 +73,7 @@ class BrasilNFeRequest
             'Accept: application/json',
             'Token: ' . $this->token,
             'UserToken: ' . $this->userToken,
-            'X-SDK-Version: 1.1.0',
+            'X-SDK-Version: 1.2.0',
             'X-SDK-Language: PHP'
         ];
 

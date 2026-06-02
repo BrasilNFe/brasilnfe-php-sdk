@@ -18,14 +18,14 @@ class SpedRetorno extends Erros
     /** @var int */
     public int $status;
     
-    /** @var string */
-    public string $codigo;
+    /** @var string|null */
+    public ?string $codigo = null;
 
-    /** @var string */
-    public string $registros;
+    /** @var string|null */
+    public ?string $registros = null;
     
-    /** @var string */
-    public string $url;
+    /** @var string|null */
+    public ?string $url = null;
     
     /** @var Detalhamento */
     public Detalhamento $detalhamento;
@@ -53,11 +53,11 @@ class Detalhamento
  */
 class InfoAjuste
 {
-    /** @var string */
-    public string $codigoAjuste;
+    /** @var string|null */
+    public ?string $codigoAjuste = null;
     
-    /** @var string */
-    public string $codigoProduto;
+    /** @var string|null */
+    public ?string $codigoProduto = null;
     
     /** @var float */
     public float $icms;
@@ -83,11 +83,11 @@ class DetalhamentoDFe
     /** @var int */
     public int $tipoMovimentacao;
 
-    /** @var string */
-    public string $cpfCnpj;
+    /** @var string|null */
+    public ?string $cpfCnpj = null;
 
-    /** @var string */
-    public string $chave;
+    /** @var string|null */
+    public ?string $chave = null;
     
     /** @var int|null */
     public ?int $cfopCte;
@@ -110,26 +110,26 @@ class DetalhamentoDFeItem
     /** @var int */
     public int $numeroItem;
 
-    /** @var string */
-    public string $codigoProduto;
+    /** @var string|null */
+    public ?string $codigoProduto = null;
 
     /** @var int */
     public int $cfop;
     
-    /** @var string */
-    public string $ncm;
+    /** @var string|null */
+    public ?string $ncm = null;
     
-    /** @var string */
-    public string $cstIcmsCsosn;
+    /** @var string|null */
+    public ?string $cstIcmsCsosn = null;
     
-    /** @var string */
-    public string $cstPis;
+    /** @var string|null */
+    public ?string $cstPis = null;
     
-    /** @var string */
-    public string $cstCofins;
+    /** @var string|null */
+    public ?string $cstCofins = null;
     
-    /** @var string */
-    public string $cstIpi;
+    /** @var string|null */
+    public ?string $cstIpi = null;
     
     /** @var float */
     public float $quantidade;

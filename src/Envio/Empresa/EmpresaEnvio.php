@@ -21,6 +21,14 @@ class EmpresaEnvio
     public ?string $cnpj = null;
 
     /**
+     * Código de identificação da empresa no sistema do integrador.
+     * Campo opcional e livre, usado pelo integrador para correlacionar a
+     * empresa do Brasil NFe com o cadastro interno do próprio ERP/sistema.
+     * @var string|null
+     */
+    public ?string $codigoInterno = null;
+
+    /**
      * Nome Fantasia
      * @var string|null
      */
@@ -31,13 +39,6 @@ class EmpresaEnvio
      * @var string|null
      */
     public ?string $rzSocial = null;
-
-    /**
-     * Tipo da empresa
-     * 1 - Matriz
-     * @var int
-     */
-    public int $tipoEmpresa = 1;
 
     /**
      * Inscrição Estadual
@@ -65,18 +66,6 @@ class EmpresaEnvio
      * @var string|null
      */
     public ?string $cnae = null;
-
-    /**
-     * Identificador do código de segurança do contribuinte (NFC-e)
-     * @var string|null
-     */
-    public ?string $identificadorCsc = null;
-
-    /**
-     * Código de segurança do contribuinte (NFC-e)
-     * @var string|null
-     */
-    public ?string $codigoCsc = null;
 
     /**
      * Token Brasil NFe (Somente para consulta)
@@ -122,14 +111,20 @@ class Configuracao
 {
     public function __construct()
     {
+        $this->nfse = new NFSe();
         $this->nfe = new NFe();
         $this->nfce = new NFCe();
-        $this->nfse = new NFSe();
-        $this->servicos = new Servicos();
+        $this->transportador = new Transportador();
     }
 
     /**
-     * Informações de NFe
+     * Informações de NFS-e
+     * @var NFSe
+     */
+    public NFSe $nfse;
+
+    /**
+     * Informações de NF-e
      * @var NFe
      */
     public NFe $nfe;
@@ -141,84 +136,25 @@ class Configuracao
     public NFCe $nfce;
 
     /**
-     * Informações de NFS-e
-     * @var NFSe
+     * Informações da empresa como transportador, comuns aos documentos de
+     * transporte (CT-e e MDF-e).
+     * @var Transportador
      */
-    public NFSe $nfse;
-
-    /**
-     * Informações de Serviços
-     * @var Servicos
-     */
-    public Servicos $servicos;
+    public Transportador $transportador;
 }
 
 /**
- * Class NFSe
+ * Class Transportador
  */
-class NFSe
+class Transportador
 {
     /**
-     * Código tipo ambiente emissão NFS-e
-     * 1 - Produção
-     * 2 - Homologação
-     * @var int
+     * Registro Nacional de Transportadores Rodoviários de Cargas (RNTRC) da ANTT.
+     * Obrigatório para emissão de CT-e (modelo 57) e MDF-e (modelo 58) quando o
+     * emitente atua como transportador rodoviário.
+     * @var string|null
      */
-    public int $codTipoAmbiente = 1;
-
-    /**
-     * Token da empresa que possui a procuração para emissão de notas
-     * @var string
-     */
-    public string $tokenProcurador;
-
-    /**
-     * Login (somente municípios que utilizam login/senha para autenticação no webservice)
-     * @var string
-     */
-    public string $loginWebService;
-
-    /**
-     * Senha (somente municípios que utilizam login/senha para autenticação no webservice)
-     * @var string
-     */
-    public string $senhaWebService;
-
-    /**
-     * Cpf do usuário vinculado a empresa (somente municípios que utilizam login/senha para autenticação no webservice)
-     * @var string
-     */
-    public string $cpfWebService;
-
-    /**
-     * Controle de série e numeração interno?
-     * Verdadeiro - A série e numeração é controlado pelo Brasil NFe
-     * Falso - A série e numeração é obrigatoriamente enviada pela API
-     * @var bool
-     */
-    public bool $controleNumeracaoInterno = true;
-}
-
-/**
- * Class NFe
- */
-class NFe
-{
-    /**
-     * Código Tipo Ambiente Emissão NF-e
-     * 1 - Produção
-     * 2 - Homologação
-     * @var int
-     */
-    public int $codTipoAmbiente = 1;
-
-    /**
-     * Controle de série e numeração interno?
-     * Verdadeiro - A série e numeração é controlado pelo Brasil NFe
-     * Falso - A série e numeração é obrigatoriamente enviada pela API
-     * @var bool
-     */
-    public bool $controleNumeracaoInterno = true;
+    public ?string $rntrc = null;
 }
 
 /**
@@ -227,72 +163,68 @@ class NFe
 class NFCe
 {
     /**
-     * Código Tipo Ambiente Emissão NFC-e
-     * 1 - Produção
-     * 2 - Homologação
-     * @var int
+     * Identificador do código de segurança do contribuinte (Ambiente de Produção)
+     * @var string|null
      */
-    public int $codTipoAmbiente = 1;
+    public ?string $idCSCProducao = null;
 
     /**
-     * Controle de série e numeração interno?
-     * Verdadeiro - A série e numeração é controlado pelo Brasil NFe
-     * Falso - A série e numeração é obrigatoriamente enviada pela API
-     * @var bool
+     * Código de segurança do contribuinte (Ambiente de Produção)
+     * @var string|null
      */
-    public bool $controleNumeracaoInterno = true;
+    public ?string $cscProducao = null;
+
+    /**
+     * Identificador do código de segurança do contribuinte (Ambiente de Homologação)
+     * @var string|null
+     */
+    public ?string $idCSCHomologacao = null;
+
+    /**
+     * Código de segurança do contribuinte (Ambiente de Homologação)
+     * @var string|null
+     */
+    public ?string $cscHomologacao = null;
 }
 
 /**
- * Class Servicos
+ * Class NFe
  */
-class Servicos
+class NFe
 {
     /**
-     * Serviço de MDF-e/CT-e?
-     * Verdadeiro - Serviço de emissão de MDF-e/CT-e ativado
-     * Falso - Serviço de emissão de MDF-e/CT-e desativado
+     * Manifestar ciência da operação automaticamente (Permite buscar notas de entrada)
      * @var bool
      */
-    public bool $mdfeCTe;
+    public bool $autoManifestarCienciaOperacao = false;
+}
+
+/**
+ * Class NFSe
+ */
+class NFSe
+{
+    /**
+     * Token da empresa que possui a procuração para emissão de notas
+     * @var string|null
+     */
+    public ?string $tokenProcurador = null;
 
     /**
-     * Serviço de NFe/NFCe?
-     * Verdadeiro - Serviço de emissão de NFe/NFCe ativado
-     * Falso - Serviço de emissão de NFe/NFCe desativado
-     * @var bool
+     * Login (somente municípios que utilizam login/senha para autenticação no webservice)
+     * @var string|null
      */
-    public bool $nfeNfce;
+    public ?string $loginWebService = null;
 
     /**
-     * Serviço de NFSe?
-     * Verdadeiro - Serviço de emissão de NFS-e ativado
-     * Falso - Serviço de emissão de NFS-e desativado
-     * @var bool
+     * Senha (somente municípios que utilizam login/senha para autenticação no webservice)
+     * @var string|null
      */
-    public bool $nfse;
+    public ?string $senhaWebService = null;
 
     /**
-     * Serviço do Sintegra?
-     * Verdadeiro - Serviço de emissão de Sped ativado
-     * Falso - Serviço de emissão de Sped desativado
-     * @var bool
+     * Cpf do usuário vinculado a empresa (somente municípios que utilizam login/senha para autenticação no webservice)
+     * @var string|null
      */
-    public bool $sped;
-
-    /**
-     * Serviço do Sintegra?
-     * Verdadeiro - Serviço de emissão de Sintegra ativado
-     * Falso - Serviço de emissão de Sintegra desativado
-     * @var bool
-     */
-    public bool $sintegra;
-
-    /**
-     * Serviço de CF-e SAT?
-     * Verdadeiro - Serviço de emissão de CF-e SAT ativado
-     * Falso - Serviço de emissão de CF-e SAT desativado
-     * @var bool
-     */
-    public bool $cfeSat;
+    public ?string $cpfWebService = null;
 }

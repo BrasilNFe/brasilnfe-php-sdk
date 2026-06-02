@@ -77,6 +77,16 @@ class Produto
     public $unidadeComercialTributavel;
 
     /**
+     * @var float|null Quantidade Tributável do produto (se diferente da quantidade comercial).
+     */
+    public $quantidadeTributavel;
+
+    /**
+     * @var float|null Valor unitário tributável (se diferente do valor unitário comercial).
+     */
+    public $valorUnitarioTributavel;
+
+    /**
      * @var float Valor do Desconto
      */
     public $valorDesconto;
@@ -151,7 +161,9 @@ class Produto
     public $origemProduto;
     
     /**
-     * @var string Código do grupo tributário cadastrado no Painel, para automação de impostos
+     * @var string Código do grupo tributário cadastrado no Painel, para automação de impostos.
+     * QUANDO INFORMADO: o sistema aplica automaticamente CFOP, CST, ICMS, IPI, PIS e COFINS do grupo
+     * — você NÃO precisa preencher o bloco Imposto nem o CFOP do item.
      */
     public $codTributacao;
 
@@ -159,10 +171,105 @@ class Produto
      * @var Imposto ICMS, IPI, PIS, COFINS
      */
     public Imposto $imposto;
-    
+
     public ?Combustivel $combustivel = null;
-    
+
     public ?DeclaracaoImportacao $declaracaoImportacao = null;
+
+    /**
+     * Informações de produtos agropecuários e florestais (NT 2024.003 - Grupo ZF).
+     * Obrigatório a partir de 01/03/2026 para NCMs específicos (01XXXXXX, 0301XXXX,
+     * 06-12XXXX, 3808.52 a 3808.99). Já obrigatório em BA, GO, MA, MT para 0102XXXX.
+     * @var Agropecuaria|null
+     */
+    public ?Agropecuaria $agropecuaria = null;
+
+    /**
+     * Lista de informações de rastreabilidade do produto (lote, fabricação, validade).
+     * Obrigatório para medicamentos, alimentos perecíveis e outros NCMs específicos.
+     * @var list<Rastreabilidade>
+     */
+    public array $rastros = [];
+}
+
+/**
+ * Rastreabilidade de produto (lote, fabricação, validade). Obrigatória para medicamentos,
+ * alimentos perecíveis e outros NCMs específicos.
+ */
+class Rastreabilidade
+{
+    /** Número do lote do produto. */
+    public ?string $numeroLote = null;
+
+    /** Quantidade do lote. */
+    public ?float $quantidadeLote = null;
+
+    /** Data de fabricação. */
+    public ?\DateTime $dataFabricacao = null;
+
+    /** Data de validade. */
+    public ?\DateTime $dataValidade = null;
+
+    /** Código de agregação (somente para medicamentos). */
+    public ?string $codigoAgregacao = null;
+}
+
+class Agropecuaria
+{
+    /**
+     * Defensivos agrícolas aplicados (0 a 20). Cada item exige NumeroReceituario e CpfResponsavelTecnico.
+     * @var list<Defensivo>
+     */
+    public array $defensivos = [];
+
+    /**
+     * Guia de trânsito que autoriza o transporte sanitário do animal, vegetal ou produto florestal.
+     * @var GuiaTransito|null
+     */
+    public ?GuiaTransito $guiaTransito = null;
+}
+
+class Defensivo
+{
+    /**
+     * Número da receita ou receituário do agrotóxico/defensivo agrícola (1-30 caracteres). Obrigatório.
+     * @var string|null
+     */
+    public ?string $numeroReceituario = null;
+
+    /**
+     * CPF (11 dígitos) do engenheiro agrônomo, florestal ou técnico agrícola responsável. Obrigatório.
+     * @var string|null
+     */
+    public ?string $cpfResponsavelTecnico = null;
+}
+
+class GuiaTransito
+{
+    /**
+     * Tipo da guia de trânsito. Obrigatório.
+     * 1=GTA, 2=TTA, 3=DTA, 4=ATV, 5=PTV, 6=GTV, 7=Guia Florestal (DOF, SisFlora-PA/MT, SIAM-MG).
+     * @var int|null
+     */
+    public ?int $tipoGuia = null;
+
+    /**
+     * Sigla da UF emissora da guia (2 caracteres). Obrigatório.
+     * @var string|null
+     */
+    public ?string $ufGuia = null;
+
+    /**
+     * Série da guia (1-9 dígitos). Opcional.
+     * @var string|null
+     */
+    public ?string $serieGuia = null;
+
+    /**
+     * Número da guia (1-9 dígitos). Obrigatório.
+     * @var string|null
+     */
+    public ?string $numeroGuia = null;
 }
 
 class Imposto
@@ -181,6 +288,11 @@ class Imposto
     public COFINS $cofins;
     public IBSCBS $ibscbs;
     public ?Importacao $importacao = null;
+
+    /**
+     * Bloco IBS/CBS (Reforma Tributária). Usar quando aplicável.
+     */
+    public ?IBSCBS $iBSCBS = null;
 }
 
 class ICMS
@@ -253,6 +365,35 @@ class ICMS
      * @var float|null Percentual de diferimento (Utilizado somente no CST 51)
      */
     public $aliquotaDiferimento;
+
+    /**
+     * @var int|null Modalidade de determinação da Base de Cálculo do ICMS.
+     * 0 - Margem Valor Agregado (%); 1 - Pauta (valor); 2 - Preço tabelado; 3 - Valor da operação.
+     */
+    public $modalidadeBcIcms;
+}
+
+/**
+ * IBS/CBS (Imposto sobre Bens e Serviços / Contribuição sobre Bens e Serviços) -
+ * Reforma Tributária 2026 — específico para NF-e/NFC-e.
+ * Para NFS-e use BrasilNFeSdk\Envio\NFSe\IBSCBS.
+ */
+class IBSCBS
+{
+    /** Código de Classificação Tributária (Padrão "000001"). */
+    public ?string $codClassificacaoTributaria = null;
+
+    /** Base de cálculo. */
+    public ?float $baseCalculo = null;
+
+    /** Alíquota do IBS de competência das UF. */
+    public ?float $aliquotaIBSUF = null;
+
+    /** Alíquota do IBS de competência do Município. */
+    public ?float $aliquotaIBSMun = null;
+
+    /** Alíquota da CBS. */
+    public ?float $aliquotaCBS = null;
 }
 
 class IPI
@@ -731,11 +872,44 @@ class NotaFiscalEnvio
      * @var Pagamento[]
      */
     public $pagamentos;
-    
+
     public Cobranca $cobranca;
     public Transporte $transporte;
     public Exporta $exporta;
     public Entrega $entrega;
+
+    /**
+     * Retenções de tributos federais (IRRF, PIS, COFINS, CSLL, Previdência).
+     * Use quando o tomador retém impostos na fonte (operações com prestação de serviço).
+     */
+    public ?RetencoesFederais $retencoes = null;
+}
+
+/**
+ * Retenções de tributos federais (IRRF, PIS, COFINS, CSLL, Previdência).
+ */
+class RetencoesFederais
+{
+    /** Base de cálculo do IRRF. */
+    public ?float $baseCalculoIRRF = null;
+
+    /** Valor retido do IRRF. */
+    public ?float $valorIRRF = null;
+
+    /** Valor retido de PIS. */
+    public ?float $valorRetidoPIS = null;
+
+    /** Valor retido de COFINS. */
+    public ?float $valorRetidoCOFINS = null;
+
+    /** Valor retido de CSLL. */
+    public ?float $valorRetidoCSLL = null;
+
+    /** Base de cálculo da retenção de Previdência. */
+    public ?float $baseCalculoRetencaoPrevidencia = null;
+
+    /** Valor retido de Previdência. */
+    public ?float $valorRetencaoPrevidencia = null;
 }
 
 // NotaFiscalLoteEnvio e NFInfo foram movidos para NotaFiscalLoteEnvio.php

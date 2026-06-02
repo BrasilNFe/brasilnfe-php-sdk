@@ -10,14 +10,14 @@ use BrasilNFeSdk\Envio\NFe\DCeEnvio;
 use BrasilNFeSdk\Envio\NFe\NotaFiscalComplementarEnvio;
 use BrasilNFeSdk\Envio\NFe\NotaFiscalEnvio;
 use BrasilNFeSdk\Envio\NFe\NotaFiscalLoteEnvio;
-use BrasilNFeSdk\Envio\NFe\NotaFiscalServicoEnvio;
+use BrasilNFeSdk\Envio\NFSe\NotaFiscalServicoEnvio;
 use BrasilNFeSdk\Envio\Outros\NFEnerComEnvio;
 use BrasilNFeSdk\Envio\Outros\NFEnerComRetorno;
 use BrasilNFeSdk\Retorno\CTeRetorno;
 use BrasilNFeSdk\Retorno\DCeRetorno;
 use BrasilNFeSdk\Retorno\NotaFiscalLoteRetorno;
 use BrasilNFeSdk\Retorno\NotaFiscalRetorno;
-use BrasilNFeSdk\Retorno\NotaFiscalServicoRetorno;
+use BrasilNFeSdk\Retorno\NFSe\NotaFiscalServicoRetorno;
 
 class NotaFiscal extends BrasilNFeRequest
 {

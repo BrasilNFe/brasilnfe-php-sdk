@@ -19,7 +19,7 @@ class Eventos extends BrasilNFeRequest
 
     public function cancelarNotaFiscal(CancelarNotaFiscalEnvio $cancelarNotaFiscalEnvio): EventoNotaFiscalRetorno
     {
-        return $this->request("CancelNF", $cancelarNotaFiscalEnvio, EventoNotaFiscalRetorno::class);
+        return $this->request("CancelarNotaFiscal", $cancelarNotaFiscalEnvio, EventoNotaFiscalRetorno::class);
     }
 
     public function enviarCartaCorrecao(CartaCorrecaoEnvio $cartaCorrecaoEnvio): EventoNotaFiscalRetorno

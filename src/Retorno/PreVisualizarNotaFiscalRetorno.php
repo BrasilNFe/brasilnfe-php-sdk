@@ -12,6 +12,6 @@ class PreVisualizarNotaFiscalRetorno extends Erros
     /** @var bool Status da pré-visualização */
     public bool $status;
 
-    /** @var string Conteúdo do arquivo em base64 */
-    public string $base64File;
+    /** @var string|null Conteúdo do arquivo em base64 */
+    public ?string $base64File = null;
 }

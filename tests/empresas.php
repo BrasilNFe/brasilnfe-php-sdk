@@ -47,17 +47,21 @@ print_r($retorno);
 $empresa = new EmpresaEnvio();
 
 $empresa->cnpj = "39.658.743/0001-99";
+$empresa->codigoInterno = "ERP-001";
 $empresa->nmFantasia = "BRASIL NFE LTDA";
 $empresa->rzSocial = "BRASIL NFE LTDA";
-$empresa->tipoEmpresa = 1;
 $empresa->ie = "ISENTO";
 $empresa->im = "255762";
 $empresa->crt = 1;
 $empresa->cnae = null;
-$empresa->identificadorCsc = null;
-$empresa->codigoCsc = null;
 $empresa->site = "www.brasilnfe.com.br";
 $empresa->codGrupo = null;
+
+// CSC por ambiente (NFC-e)
+$empresa->configuracao->nfce->idCSCProducao = null;
+$empresa->configuracao->nfce->cscProducao = null;
+$empresa->configuracao->nfce->idCSCHomologacao = null;
+$empresa->configuracao->nfce->cscHomologacao = null;
 
 // Endereço
 $empresa->endereco->cep = "";

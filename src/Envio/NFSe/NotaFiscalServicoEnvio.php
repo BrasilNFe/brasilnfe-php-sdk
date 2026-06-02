@@ -1,6 +1,6 @@
 <?php
 
-namespace BrasilNFeSdk\Envio\NFe;
+namespace BrasilNFeSdk\Envio\NFSe;
 
 use BrasilNFeSdk\Envio\Outros\Pessoa;
 
@@ -32,13 +32,13 @@ class NFSInfo
     public ?string $serieRps = null;
     public ?int $numeroRps = null;
     public ?string $identificadorInterno = null;
-    
+
     /**
      * Data da competência
      * Caso não informado será a data de emissão
      */
     public ?\DateTime $dataCompetencia = null;
-    
+
     public ?\DateTime $dataEmissao = null;
     public Tomador $tomador;
     public ?IntermediarioServico $intermediario = null;
@@ -159,11 +159,21 @@ class Servico
      * Iss Retido?
      */
     public bool $issRetido = false;
-    
+
     /**
      * Código de tributação do município
      */
     public ?string $codTributacaoMunicipio = null;
+
+    /**
+     * Código CNAE (Classificação Nacional de Atividades Econômicas).
+     */
+    public ?string $codigoCnae = null;
+
+    /**
+     * Código NBS (Nomenclatura Brasileira de Serviços).
+     */
+    public ?string $codNBS = null;
 
     /**
      * Exigibilidade ISS (Padrão 1)
@@ -181,7 +191,7 @@ class Servico
      * Código do municipio da incedência do serviço (Padrão - Município do Prestador)
      */
     public ?string $codMunicipioIncidencia = null;
-    
+
     /**
      * Código do municipio da prestação do serviço (Padrão - Município do Prestador)
      */
@@ -189,6 +199,11 @@ class Servico
 
     public Valores $valores;
     public ConfiguracaoImposto $configuracaoImposto;
+
+    /**
+     * Bloco IBS/CBS (Reforma Tributária). Usar quando aplicável para NFS-e.
+     */
+    public ?IBSCBS $iBSCBS = null;
 
     public function __construct()
     {
@@ -224,4 +239,51 @@ class Tomador extends Pessoa
     public ?string $cpfCnpj = null;
     public ?string $nmTomador = null;
     public ?string $im = null;
+}
+
+/**
+ * Class IBSCBS (específico para NFS-e — diferente do IBSCBS da NF-e/NFC-e).
+ * Mirror de BrasilNFePack.NFS.Envio.IBSCBS.
+ */
+class IBSCBS
+{
+    /**
+     * Código de Classificação Tributária (Padrão 000001)
+     */
+    public ?string $codClassTrib = null;
+
+    /**
+     * Código Indicador da Operação
+     */
+    public ?string $codIndicadorOperacao = null;
+
+    /**
+     * Indica operação de uso ou consumo pessoal (indFinal). 0 - Não (padrão); 1 - Sim.
+     */
+    public int $indicadorUsoFinal = 0;
+
+    /**
+     * Indicador do destinatário dos serviços (indDest). 0 - destinatário é o próprio tomador (padrão); 1 - destinatário não é o adquirente.
+     */
+    public int $indicadorDestinatario = 0;
+
+    /**
+     * Alíquota do IBS Estadual (pIBSUF) em %. Se null, usa 0,10% (padrão de teste 2025-2026).
+     */
+    public ?float $aliqIbsUf = null;
+
+    /**
+     * Alíquota do IBS Municipal (pIBSMun) em %. Se null, usa 0% (padrão de teste 2025-2026).
+     */
+    public ?float $aliqIbsMun = null;
+
+    /**
+     * Alíquota da CBS (pCBS) em %. Se null, usa 0,90% (padrão de teste 2025-2026).
+     */
+    public ?float $aliqCbs = null;
+
+    /**
+     * Base de cálculo do IBS/CBS (vBC). Se null, usa ValorServico - DescontoIncondicionado.
+     */
+    public ?float $baseCalculo = null;
 }

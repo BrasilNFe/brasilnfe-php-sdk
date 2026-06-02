@@ -29,6 +29,14 @@ class ObterArquivosRangeEnvio
     public int $type = 1;
 
     /**
+     * Tipo de ambiente (Padrão 1 - Saída)
+     * 1 - Saídas
+     * 2 - Entradas
+     * 3 - Saídas e Entradas
+     */
+    public int $tipoNota = 1;
+
+    /**
      * Tipo de ambiente (Padrão 1 - Produção)
      * 1 - Produção
      * 2 - Homologação

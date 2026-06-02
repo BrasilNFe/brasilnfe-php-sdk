@@ -29,6 +29,12 @@ class ManifestarNotaFiscalEnvio
     public int $tipoManifestacao;
 
     /**
+     * Justificativa. OBRIGATÓRIA quando tipoManifestacao = 4 (mínimo 15 caracteres).
+     * Para outros tipos pode omitir.
+     */
+    public ?string $justificativa = null;
+
+    /**
      * Número sequencial do evento
      */
     public ?int $numeroSequencial = null;

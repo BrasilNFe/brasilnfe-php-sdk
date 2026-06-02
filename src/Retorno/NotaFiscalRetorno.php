@@ -33,6 +33,9 @@ class RetornoInfo
     /** @var int|null */
     public ?int $numero = null;
 
+    /** @var int|null Série da nota fiscal autorizada. */
+    public ?int $serie = null;
+
     /** @var string|null */
     public ?string $chaveNf = null;
 

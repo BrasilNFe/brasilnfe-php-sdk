@@ -1,6 +1,6 @@
 # Brasil NFe PHP SDK
 
-[![Packagist Version](https://img.shields.io/badge/packagist-v1.1.0-blue.svg?style=flat-square)](https://packagist.org/packages/brasilnfe/brasilnfe-php-sdk)
+[![Packagist Version](https://img.shields.io/badge/packagist-v1.2.0-blue.svg?style=flat-square)](https://packagist.org/packages/brasilnfe/brasilnfe-php-sdk)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.0-777bb4.svg?style=flat-square)](https://www.php.net/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
@@ -199,7 +199,7 @@ $req = new StatusSefazEnvio();
 $req->modeloDocumento = 55;
 $req->tipoAmbiente    = 2; // homologação
 
-$resp = $bnfe->Consultas->statusSefaz($req);
+$resp = $bnfe->Consultas->consultarStatusSefaz($req);
 
 echo $resp->statusSefaz->dsStatusRespostaSefaz ?? 'indisponível';
 ```
@@ -359,7 +359,7 @@ foreach ($resp->notas as $nota) {
 ### 4. Emitir NFS-e
 
 ```php
-use BrasilNFeSdk\Envio\NFe\{NotaFiscalServicoEnvio, NFSInfo};
+use BrasilNFeSdk\Envio\NFSe\{NotaFiscalServicoEnvio, NFSInfo};
 
 $nfse = new NotaFiscalServicoEnvio();
 $nfse->tipoAmbiente = 2;
@@ -449,7 +449,7 @@ $req = new StatusSefazEnvio();
 $req->tipoAmbiente    = 2;
 $req->modeloDocumento = 55;
 
-$resp = $bnfe->Consultas->statusSefaz($req);
+$resp = $bnfe->Consultas->consultarStatusSefaz($req);
 echo $resp->statusSefaz->dsStatusRespostaSefaz;
 ```
 
@@ -463,7 +463,7 @@ $busca->tipoDocumentoFiscal = 1;                 // 0=Entradas, 1=Saídas
 $busca->dtInicio = new \DateTime('2026-04-01');
 $busca->dtFim    = new \DateTime('2026-04-18');
 
-$resp = $bnfe->Consultas->buscarNotaFiscal($busca);
+$resp = $bnfe->Consultas->obterNotasFiscais($busca);
 ```
 
 ### 12. Baixar XML / DANFE
@@ -476,7 +476,7 @@ $req->chaveNF  = '35230100000000000000550010000000011000000000';
 $req->fileType = 2;                // 1=XML, 2=DANFE/Cupom
 $req->tipoDocumentoFiscal = 1;     // 0=Entrada, 1=Saída
 
-$bytes = $bnfe->Arquivos->pegarArquivo($req);   // já vem decodificado de base64
+$bytes = $bnfe->Arquivos->obterArquivoNotaFiscal($req);   // já vem decodificado de base64
 file_put_contents('danfe.pdf', $bytes);
 ```
 
@@ -487,10 +487,10 @@ use BrasilNFeSdk\Envio\Outros\{SpedEnvio, SintegraEnvio};
 
 $sped = new SpedEnvio();
 // preencha período, tipo, finalidade…
-$resp = $bnfe->Arquivos->obterArquivoSped($sped);
+$resp = $bnfe->Arquivos->gerarArquivoSped($sped);
 
 $sintegra = new SintegraEnvio();
-$resp = $bnfe->Arquivos->obterArquivoSintegra($sintegra);
+$resp = $bnfe->Arquivos->gerarArquivoSintegra($sintegra);
 ```
 
 ### 14. Gestão de empresas e certificados
@@ -550,38 +550,43 @@ $empresas = $bnfe->Empresa->buscarTodasEmpresas();
 
 | Método                     | Endpoint                   | Payload                       | Retorno                            |
 |----------------------------|----------------------------|-------------------------------|------------------------------------|
-| `statusSefaz`              | `StatusSefaz`              | `StatusSefazEnvio`            | `StatusSefazRetorno`               |
+| `consultarStatusSefaz`     | `ConsultarStatusSefaz`     | `StatusSefazEnvio`            | `StatusSefazRetorno`               |
 | `calcularImpostos`         | `CalcularImpostos`         | `Produto[]`                   | `CalculoImpostosRetorno`           |
 | `preVisualizarNotaFiscal`  | `PreVisualizarNotaFiscal`  | `PreVisualizarNotaFiscalEnvio`| `PreVisualizarNotaFiscalRetorno`   |
-| `buscarNotaFiscal`         | `BuscarNotaFiscal`         | `BuscarNotaFiscalEnvio`       | `BuscarNotaFiscalRetorno`          |
 | `buscarNotaFiscalServico`  | `BuscarNotaFiscalServico`  | `BuscarNotaFiscalServicoEnvio`| `NotaFiscalServicoRetorno`         |
+| `obterNotasFiscais`        | `ObterNotasFiscais`        | `BuscarNotaFiscalEnvio`       | `BuscarNotaFiscalRetorno`          |
 | `consultarCadastroSefaz`   | `ConsultarCadastroSefaz`   | `ConsultarCadastroEnvio`      | `ConsultarCadastroRetorno`         |
-| `buscarArquivoSped`        | `BuscarArquivoSped`        | `string` (código)             | `SpedRetorno`                      |
+| `obterArquivoSped`         | `ObterArquivoSped`         | `string` (código)             | `SpedRetorno`                      |
+| `consultarLoteNFe`         | `ConsultarLoteNFe`         | `ConsultarLoteNFeEnvio`       | `NotaFiscalLoteRetorno`            |
 
 ### `Arquivos` — [src/Methods/Arquivos.php](src/Methods/Arquivos.php)
 
 | Método                        | Endpoint                   | Payload                     | Retorno                    |
 |-------------------------------|----------------------------|-----------------------------|----------------------------|
-| `obterArquivoSintegra`        | `ObterArquivoSintegra`     | `SintegraEnvio`             | `SintegraRetorno`          |
-| `obterArquivoFci`             | `ObterArquivoFci`          | `FciEnvio`                  | `FciRetorno`               |
+| `gerarArquivoSintegra`        | `GerarArquivoSintegra`     | `SintegraEnvio`             | `SintegraRetorno`          |
+| `gerarArquivoFci`             | `GerarArquivoFci`          | `FciEnvio`                  | `FciRetorno`               |
 | `obterArqEnerCom`             | `ObterArquivoNFEnerCom`    | `ArqEnerComEnvio`           | `ArqEnerComRetorno`        |
-| `obterArquivoSped`            | `ObterArquivoSped`         | `SpedEnvio`                 | `SpedRetorno`              |
-| `obterArquivoSpedUnificado`   | `ObterArquivoSpedUnificado`| `UnificarSpedEnvio`         | `SpedRetorno`              |
+| `gerarArquivoSped`            | `GerarArquivoSped`         | `SpedEnvio`                 | `SpedRetorno`              |
+| `unificarArquivoSped`         | `UnificarArquivoSped`      | `UnificarSpedEnvio`         | `SpedRetorno`              |
 | `recriarArquivoSped`          | `RecriarArquivoSped`       | `string` (código)           | `SpedRetorno`              |
-| `pegarArquivo`                | `GetFile`                  | `PegarArquivoEnvio`         | `string` (binário)         |
-| `pegarArquivoEvento`          | `GetFileFromEvent`         | `PegarArquivoEventoEnvio`   | `string` (binário)         |
-| `obterArquivosPorRange`       | `ObterArquivosPorRange`    | `ObterArquivosRangeEnvio`   | `ObterArquivosRangeRetorno`|
+| `obterArquivoNotaFiscal`      | `ObterArquivoNotaFiscal`   | `PegarArquivoEnvio`         | `string` (binário)         |
+| `obterArquivoEvento`          | `ObterArquivoEvento`       | `PegarArquivoEventoEnvio`   | `string` (binário)         |
+| `obterArquivosPorPeriodo`     | `ObterArquivosPorPeriodo`  | `ObterArquivosRangeEnvio`   | `ObterArquivosRangeRetorno`|
 
 ### `Empresa` — [src/Methods/Empresa.php](src/Methods/Empresa.php)
 
 | Método                  | Endpoint              | Payload             | Retorno               |
 |-------------------------|-----------------------|---------------------|-----------------------|
-| `alterarCertificado`    | `AlterarCertificado`  | `CertificadoEnvio`  | `CertificadoRetorno`  |
-| `verificarCertificado`  | `VerifyCertificate`   | `CertificadoEnvio`  | `CertificadoRetorno`  |
-| `adicionarEmpresa`      | `AdicionarEmpresa`    | `EmpresaEnvio`      | `EmpresaRetorno`      |
-| `editarEmpresa`         | `EditarEmpresa`       | `EmpresaEnvio`      | `EmpresaRetorno`      |
-| `buscarEmpresa`         | `BuscarEmpresa`       | —                   | `EmpresaEnvio`        |
-| `buscarTodasEmpresas`   | `BuscarTodasEmpresas` | —                   | `EmpresaEnvio[]`      |
+| `alterarCertificado`    | `AlterarCertificado`  | `CertificadoEnvio`  | `CertificadoRetorno`        |
+| `verificarCertificado`  | `VerifyCertificate`   | `CertificadoEnvio`  | `CertificadoRetorno`        |
+| `adicionarEmpresa`      | `AdicionarEmpresa`    | `EmpresaEnvio`      | `EmpresaRetorno`            |
+| `editarEmpresa`         | `EditarEmpresa`       | `EmpresaEnvio`      | `EmpresaRetorno`            |
+| `deletarEmpresa`        | `DeletarEmpresa`      | —                   | `EmpresaRetorno`            |
+| `buscarEmpresa`         | `BuscarEmpresa`       | —                   | `EmpresaEnvio`              |
+| `buscarTodasEmpresas`   | `BuscarTodasEmpresas` | —                   | `EmpresaEnvio[]`            |
+| `gerarLinkAtivacao`     | `GerarLinkAtivacao`   | —                   | `string` (URL Fintely)      |
+| `consultarNumeracao`    | `ConsultarNumeracao`  | —                   | `ConsultarNumeracaoRetorno` |
+| `atualizarNumeracao`    | `AtualizarNumeracao`  | `Numeracao`         | `AtualizarNumeracaoRetorno` |
 
 ---
 
@@ -735,7 +740,7 @@ O SDK usa `symfony/serializer` configurado em [`BrasilNFeRequest`](src/BrasilNFe
   Accept: application/json
   Token: <seu token>
   UserToken: <user token, se houver>
-  X-SDK-Version: 1.1.0
+  X-SDK-Version: 1.2.0
   X-SDK-Language: PHP
   ```
 - Timeout padrão: **300s** (configurado em `curl_setopt`).

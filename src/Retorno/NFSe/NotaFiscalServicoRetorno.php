@@ -1,6 +1,6 @@
 <?php
 
-namespace BrasilNFeSdk\Retorno;
+namespace BrasilNFeSdk\Retorno\NFSe;
 
 use DateTime;
 use BrasilNFeSdk\Retorno\Erros;
@@ -17,9 +17,9 @@ class NotaFiscalServicoRetorno extends Erros
 
     /**
      * Data de recebimento do lote
-     * @var string
+     * @var string|null
      */
-    public string $dataRecebimento;
+    public ?string $dataRecebimento = null;
 
     /**
      * Número do lote enviado
@@ -30,15 +30,15 @@ class NotaFiscalServicoRetorno extends Erros
     /**
      * Código atrelado ao lote
      * - Usado para busca de lotes
-     * @var string
+     * @var string|null
      */
-    public string $codLote;
+    public ?string $codLote = null;
 
     /**
      * Número de protocolo do lote
-     * @var string
+     * @var string|null
      */
-    public string $protocolo;
+    public ?string $protocolo = null;
 
     /**
      * Código do ambiente de envio
@@ -48,15 +48,15 @@ class NotaFiscalServicoRetorno extends Erros
 
     /**
      * Descrição do ambiente de envio
-     * @var string
+     * @var string|null
      */
-    public string $dsTipoAmbiente;
+    public ?string $dsTipoAmbiente = null;
 
     /**
      * Municipio onde foi enviado
-     * @var string
+     * @var string|null
      */
-    public string $municipioEnvio;
+    public ?string $municipioEnvio = null;
 
     /**
      * 1 - Lote processado
@@ -72,9 +72,9 @@ class NotaFiscalServicoRetorno extends Erros
 
     /**
      * Dados xml do lote, bytes em base64
-     * @var string
+     * @var string|null
      */
-    public string $base64XmlLote;
+    public ?string $base64XmlLote = null;
 
     /**
      * Tempo total da transmissão para prefeitura em milisegundos
@@ -119,33 +119,39 @@ class NotaFiscalServicoRetornoInfo
 
     /**
      * Cpf ou Cnpj do Prestador
-     * @var string
+     * @var string|null
      */
-    public string $cpfCnpjPrestador;
+    public ?string $cpfCnpjPrestador = null;
 
     /**
      * Cpf ou Cnpj do Tomador
-     * @var string
+     * @var string|null
      */
-    public string $cpfCnpjTomador;
+    public ?string $cpfCnpjTomador = null;
 
     /**
      * Número da NFS-e
-     * @var string
+     * @var string|null
      */
-    public string $numeroNfse;
+    public ?string $numeroNfse = null;
+
+    /**
+     * Chave de acesso da NFS-e (quando disponível, depende do município).
+     * @var string|null
+     */
+    public ?string $chave = null;
 
     /**
      * Código de verificação da NFS-e
-     * @var string
+     * @var string|null
      */
-    public string $codVerificacao;
+    public ?string $codVerificacao = null;
 
     /**
      * Identificador interno da nfs (enviado pela API)
-     * @var string
+     * @var string|null
      */
-    public string $identificadorInterno;
+    public ?string $identificadorInterno = null;
 
     /**
      * 1 - NFSe Emitida
@@ -156,21 +162,21 @@ class NotaFiscalServicoRetornoInfo
 
     /**
      * Descrição do erro caso a nota não for emitida
-     * @var string
+     * @var string|null
      */
-    public string $erro;
+    public ?string $erro = null;
 
     /**
      * Dados xml da nfs, bytes em base64
-     * @var string
+     * @var string|null
      */
-    public string $base64Xml;
+    public ?string $base64Xml = null;
 
     /**
      * Documento pdf da nfs, bytes em base64
-     * @var string
+     * @var string|null
      */
-    public string $base64Doc;
+    public ?string $base64Doc = null;
 }
 
 /**
@@ -189,7 +195,7 @@ class Valores
      * @var float
      */
     public float $valorLiquido;
-    
+
     /**
      * Valor ISS
      * @var float
@@ -213,19 +219,19 @@ class Valores
      * @var float
      */
     public float $valorCofins;
-    
+
     /**
      * Valor CSLL
      * @var float
      */
     public float $valorCsll;
-    
+
     /**
      * Valor IR
      * @var float
      */
     public float $valorIr;
-    
+
     /**
      * Alíquota em %
      * @var float

@@ -1,6 +1,6 @@
 <?php
 
-namespace BrasilNFeSdk\Envio\NFe;
+namespace BrasilNFeSdk\Envio\NFSe;
 
 /**
  * Class BuscarNotaFiscalServicoEnvio

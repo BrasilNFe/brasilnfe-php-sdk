@@ -7,6 +7,8 @@ class DCeRetorno extends NewError
     public int $serie = 0;
     public int $numero = 0;
     public ?string $chave = null;
+    /** Protocolo de autorização da DC-e retornado pela SEFAZ. */
+    public ?string $protocolo = null;
     public ?string $tipoAmbiente = null;
     public ?string $base64Xml = null;
     public ?string $base64DACE = null;

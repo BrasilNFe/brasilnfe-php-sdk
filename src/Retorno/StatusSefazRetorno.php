@@ -18,24 +18,24 @@ class StatusSefazRetorno extends Erros
  */
 class StatusSefaz
 {
-    /** @var string */
-    public string $versao;
+    /** @var string|null */
+    public ?string $versao = null;
 
     /** @var int */
     public int $codTipoAmbiente;
 
-    /** @var string */
-    public string $dsTipoAmbiente;
+    /** @var string|null */
+    public ?string $dsTipoAmbiente = null;
 
     /** @var int */
     public int $codStatusRespostaSefaz;
 
-    /** @var string */
-    public string $dsStatusRespostaSefaz;
+    /** @var string|null */
+    public ?string $dsStatusRespostaSefaz = null;
 
     /** @var int */
     public int $codEstadoEmitente;
 
-    /** @var string */
-    public string $dsEstadoEmitente;
+    /** @var string|null */
+    public ?string $dsEstadoEmitente = null;
 }

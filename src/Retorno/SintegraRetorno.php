@@ -9,14 +9,14 @@ use BrasilNFeSdk\Retorno\Erros;
  */
 class SintegraRetorno extends Erros
 {
-    /** @var string */
-    public string $codigo;
+    /** @var string|null */
+    public ?string $codigo = null;
     
     /** @var bool */
     public bool $status;
 
-    /** @var string */
-    public string $registros;
+    /** @var string|null */
+    public ?string $registros = null;
     
     /** @var Detalhes */
     public Detalhes $detalhes;

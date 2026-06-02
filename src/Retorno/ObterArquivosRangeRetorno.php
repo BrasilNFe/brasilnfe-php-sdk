@@ -12,6 +12,6 @@ class ObterArquivosRangeRetorno extends Erros
     /** @var int */
     public int $quantidade;
 
-    /** @var string */
-    public string $base64FilesCompacted;
+    /** @var string|null */
+    public ?string $base64FilesCompacted = null;
 }

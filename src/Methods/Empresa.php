@@ -5,7 +5,10 @@ namespace BrasilNFeSdk\Methods;
 use BrasilNFeSdk\BrasilNFeRequest;
 use BrasilNFeSdk\Envio\Empresa\CertificadoEnvio;
 use BrasilNFeSdk\Envio\Empresa\EmpresaEnvio;
+use BrasilNFeSdk\Envio\Empresa\Numeracao;
+use BrasilNFeSdk\Retorno\AtualizarNumeracaoRetorno;
 use BrasilNFeSdk\Retorno\CertificadoRetorno;
+use BrasilNFeSdk\Retorno\ConsultarNumeracaoRetorno;
 use BrasilNFeSdk\Retorno\EmpresaRetorno;
 
 class Empresa extends BrasilNFeRequest
@@ -45,5 +48,27 @@ class Empresa extends BrasilNFeRequest
     public function buscarTodasEmpresas(): array
     {
         return $this->request("BuscarTodasEmpresas", "", EmpresaEnvio::class, true);
+    }
+
+    public function deletarEmpresa(): EmpresaRetorno
+    {
+        return $this->request("DeletarEmpresa", "", EmpresaRetorno::class);
+    }
+
+    public function gerarLinkAtivacao(): string
+    {
+        $response = $this->request("GerarLinkAtivacao", "", 'string', false, 'raw');
+        $decoded = json_decode((string) $response, true);
+        return is_string($decoded) ? $decoded : (string) $response;
+    }
+
+    public function consultarNumeracao(): ConsultarNumeracaoRetorno
+    {
+        return $this->request("ConsultarNumeracao", "", ConsultarNumeracaoRetorno::class);
+    }
+
+    public function atualizarNumeracao(Numeracao $numeracao): AtualizarNumeracaoRetorno
+    {
+        return $this->request("AtualizarNumeracao", $numeracao, AtualizarNumeracaoRetorno::class);
     }
 }

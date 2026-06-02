@@ -24,14 +24,14 @@ class Arquivos extends BrasilNFeRequest
         parent::__construct($token, $url);
     }
 
-    public function obterArquivoSintegra(SintegraEnvio $sintegraEnvio): SintegraRetorno
+    public function gerarArquivoSintegra(SintegraEnvio $sintegraEnvio): SintegraRetorno
     {
-        return $this->request('ObterArquivoSintegra', $sintegraEnvio, SintegraRetorno::class);
+        return $this->request('GerarArquivoSintegra', $sintegraEnvio, SintegraRetorno::class);
     }
 
-    public function obterArquivoFci(FciEnvio $fciEnvio): FciRetorno
+    public function gerarArquivoFci(FciEnvio $fciEnvio): FciRetorno
     {
-        return $this->request('ObterArquivoFci', $fciEnvio, FciRetorno::class);
+        return $this->request('GerarArquivoFci', $fciEnvio, FciRetorno::class);
     }
 
     public function obterArqEnerCom(ArqEnerComEnvio $arqEnerComEnvio): ArqEnerComRetorno
@@ -39,14 +39,14 @@ class Arquivos extends BrasilNFeRequest
         return $this->request('ObterArquivoNFEnerCom', $arqEnerComEnvio, ArqEnerComRetorno::class);
     }
 
-    public function obterArquivoSped(SpedEnvio $spedEnvio): SpedRetorno
+    public function gerarArquivoSped(SpedEnvio $spedEnvio): SpedRetorno
     {
-        return $this->request('ObterArquivoSped', $spedEnvio, SpedRetorno::class);
+        return $this->request('GerarArquivoSped', $spedEnvio, SpedRetorno::class);
     }
 
-    public function obterArquivoSpedUnificado(UnificarSpedEnvio $unificarSpedEnvio): SpedRetorno
+    public function unificarArquivoSped(UnificarSpedEnvio $unificarSpedEnvio): SpedRetorno
     {
-        return $this->request('ObterArquivoSpedUnificado', $unificarSpedEnvio, SpedRetorno::class);
+        return $this->request('UnificarArquivoSped', $unificarSpedEnvio, SpedRetorno::class);
     }
 
     public function recriarArquivoSped($codigo): SpedRetorno
@@ -57,21 +57,21 @@ class Arquivos extends BrasilNFeRequest
     /**
      * @return string Dados binários do arquivo (conteúdo decodificado do base64)
      */
-    public function pegarArquivo(PegarArquivoEnvio $pegarArquivoEnvio): string
+    public function obterArquivoNotaFiscal(PegarArquivoEnvio $pegarArquivoEnvio): string
     {
-        return $this->request('GetFile', $pegarArquivoEnvio, 'string', false, 'base64');
+        return $this->request('ObterArquivoNotaFiscal', $pegarArquivoEnvio, 'string', false, 'base64');
     }
 
     /**
      * @return string Dados binários do arquivo (conteúdo decodificado do base64)
      */
-    public function pegarArquivoEvento(PegarArquivoEventoEnvio $pegarArquivoEventoEnvio): string
+    public function obterArquivoEvento(PegarArquivoEventoEnvio $pegarArquivoEventoEnvio): string
     {
-        return $this->request('GetFileFromEvent', $pegarArquivoEventoEnvio, 'string', false, 'base64');
+        return $this->request('ObterArquivoEvento', $pegarArquivoEventoEnvio, 'string', false, 'base64');
     }
 
-    public function obterArquivosPorRange(ObterArquivosRangeEnvio $pegarArquivosRangeEnvio): ObterArquivosRangeRetorno
+    public function obterArquivosPorPeriodo(ObterArquivosRangeEnvio $pegarArquivosRangeEnvio): ObterArquivosRangeRetorno
     {
-        return $this->request('ObterArquivosPorRange', $pegarArquivosRangeEnvio, ObterArquivosRangeRetorno::class);
+        return $this->request('ObterArquivosPorPeriodo', $pegarArquivosRangeEnvio, ObterArquivosRangeRetorno::class);
     }
 }

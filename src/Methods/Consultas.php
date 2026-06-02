@@ -6,12 +6,14 @@ use BrasilNFeSdk\BrasilNFeRequest;
 use BrasilNFeSdk\Envio\Empresa\ConsultarCadastroEnvio;
 use BrasilNFeSdk\Envio\Empresa\ConsultarCadastroRetorno;
 use BrasilNFeSdk\Envio\NFe\BuscarNotaFiscalEnvio;
-use BrasilNFeSdk\Envio\NFe\BuscarNotaFiscalServicoEnvio;
+use BrasilNFeSdk\Envio\NFe\ConsultarLoteNFeEnvio;
 use BrasilNFeSdk\Envio\NFe\PreVisualizarNotaFiscalEnvio;
 use BrasilNFeSdk\Envio\NFe\StatusSefazEnvio;
+use BrasilNFeSdk\Envio\NFSe\BuscarNotaFiscalServicoEnvio;
 use BrasilNFeSdk\Retorno\BuscarNotaFiscalRetorno;
 use BrasilNFeSdk\Retorno\CalculoImpostosRetorno;
-use BrasilNFeSdk\Retorno\NotaFiscalServicoRetorno;
+use BrasilNFeSdk\Retorno\NFSe\NotaFiscalServicoRetorno;
+use BrasilNFeSdk\Retorno\NotaFiscalLoteRetorno;
 use BrasilNFeSdk\Retorno\PreVisualizarNotaFiscalRetorno;
 use BrasilNFeSdk\Retorno\SpedRetorno;
 use BrasilNFeSdk\Retorno\StatusSefazRetorno;
@@ -23,9 +25,9 @@ class Consultas extends BrasilNFeRequest
         parent::__construct($token, $url);
     }
 
-    public function statusSefaz(StatusSefazEnvio $statusSefazEnvio): StatusSefazRetorno
+    public function consultarStatusSefaz(StatusSefazEnvio $statusSefazEnvio): StatusSefazRetorno
     {
-        return $this->request("StatusSefaz", $statusSefazEnvio, StatusSefazRetorno::class);
+        return $this->request("ConsultarStatusSefaz", $statusSefazEnvio, StatusSefazRetorno::class);
     }
 
     public function calcularImpostos(array $produtos): CalculoImpostosRetorno
@@ -43,9 +45,9 @@ class Consultas extends BrasilNFeRequest
         return $this->request("BuscarNotaFiscalServico", $buscarNotaFiscalServicoEnvio, NotaFiscalServicoRetorno::class);
     }
 
-    public function buscarNotaFiscal(BuscarNotaFiscalEnvio $buscarNotaFiscalEnvio): BuscarNotaFiscalRetorno
+    public function obterNotasFiscais(BuscarNotaFiscalEnvio $buscarNotaFiscalEnvio): BuscarNotaFiscalRetorno
     {
-        return $this->request("BuscarNotaFiscal", $buscarNotaFiscalEnvio, BuscarNotaFiscalRetorno::class);
+        return $this->request("ObterNotasFiscais", $buscarNotaFiscalEnvio, BuscarNotaFiscalRetorno::class);
     }
 
     public function consultarCadastroSefaz(ConsultarCadastroEnvio $consultarCadastroEnvio): ConsultarCadastroRetorno
@@ -53,8 +55,13 @@ class Consultas extends BrasilNFeRequest
         return $this->request("ConsultarCadastroSefaz", $consultarCadastroEnvio, ConsultarCadastroRetorno::class);
     }
 
-    public function buscarArquivoSped(string $codigo): SpedRetorno
+    public function obterArquivoSped(string $codigo): SpedRetorno
     {
-        return $this->request("BuscarArquivoSped/?codigo=$codigo", $codigo, SpedRetorno::class);
+        return $this->request("ObterArquivoSped/?codigo=$codigo", $codigo, SpedRetorno::class);
+    }
+
+    public function consultarLoteNFe(ConsultarLoteNFeEnvio $envio): NotaFiscalLoteRetorno
+    {
+        return $this->request("ConsultarLoteNFe", $envio, NotaFiscalLoteRetorno::class);
     }
 }
